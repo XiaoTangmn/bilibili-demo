@@ -30,7 +30,14 @@ export default {
 }
 // import TheWelcome from './components/TheWelcome.vue'
 </script>
-<style scoped>
+<style>
+#app{
+  width:100%;
+}
+*{
+  margin:0;
+  padding:0;
+}
 header {
   line-height: 1.5;
 }
