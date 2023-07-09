@@ -144,6 +144,41 @@ export default {
         }
        
 
+      ],
+      // navmnData
+      navMhbg:[
+        {
+          idx:1,
+          name:"我家老婆来自一千年前",
+          url:"http://localhost:521/nav/mhbg0.webp"
+        },
+        {
+          idx:2,
+          name:"【我推的孩子】",
+          url:"http://localhost:521/nav/mhbg1.webp"
+        },
+        {
+          idx:3,
+          name:"碧蓝之海",
+          url:"http://localhost:521/nav/mhbg2.webp"
+        },
+        {
+          idx:4,
+          name:"我的假女友正全力防御她们的进攻",
+          url:"http://localhost:521/nav/mhbg3.webp"
+        },
+        {
+          idx:5,
+          name:"间谍过家家",
+          url:"http://localhost:521/nav/mhbg4.webp"
+        },
+        {
+          idx:6,
+          name:"罗小黑战记·蓝溪镇",
+          url:"http://localhost:521/nav/mhbg5.webp"
+        },
+        
+
       ]
       
       }

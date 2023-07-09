@@ -10,8 +10,8 @@
         <li v-for="(nav, i) in navList" :key="nav.title">
           <a
             :href="nav.url"
-            @mouseover="showCard(nav, i)"
-            @mouseout="noShowCard(nav, i)"
+            @mouseover="showCard(nav,i)"
+            @mouseout="noShowCard(nav,i)"
             >{{ nav.title }}</a
           >
         </li>
@@ -41,7 +41,7 @@
     <!-- <ShowCardVue :content="contentCard"/> -->
 
     <!-- <h1>This is an Children page</h1> -->
-    <ShowCardVue>
+    <ShowCardVue v-show="isNavItem">
       <div class="nav"></div>
     </ShowCardVue>
   </div>
@@ -49,18 +49,20 @@
 
 <script>
 import { getNav } from "@/api";
+import {debounce,text} from "@/Utils/debounce.js"
 // import
 // mock是export default不要用{}
 import Mock from "mockjs";
 import { mapState, mapMutations } from "vuex";
 
 import ShowCardVue from "../ShowCard/index.vue";
+
 export default {
   data() {
     return {
-      navItemStyle2: {
+  navItemStyle2: {
         img:" width: 70px;"+
-      "min-width: 40px;"+
+      "min-width: 40px;z-index:1;"+
       "border-radius: 50%;"+
 
       "height: 70px;",
@@ -75,8 +77,8 @@ export default {
           "border:1px solid red;" +
           "height:300px;" +
           "margin:40px;",
-        leftImg: "border-radius: 10px;" + " margin:10px 20px;" + "width:240px;",
-        navItemRight: "width: 50%;" + "border-right: 1px solid #ccc;",
+        leftImg: "border-radius: 10px;" + " margin:10px 20px;" + "width:240px;z-index:1;",
+        navItemRight: "width: 50%;",
         navLi:
           " float: left;" +
           " margin-top: 10px;" +
@@ -87,7 +89,8 @@ export default {
           "height: 100px;" +
           " flex-wrap: wrap;" +
           "flex-direction: column;" +
-          " display: flex;",
+          "display: flex;position: relative;",
+          navLeftDiv:"width:70px;height:70px;z-index:12;border-radius:50%;margin-bottom:-70px;"
       },
 
       navList: [],
@@ -114,9 +117,9 @@ export default {
   },
   methods: {
     ...mapMutations("tab", ["ChangeisShowCard"]),
-    showCard(item, i) {
-      if (i == 2) {
-        // console.log(i);
+    showCard(item, i){  
+    if (i == 2) {
+        console.log(i);
         // 悬浮是navItem出现
         this.isNavItem = true;
         // console.log(document.querySelector(".aa"));
@@ -125,50 +128,78 @@ export default {
         <div style="${this.navItemStyle2.navItem}">
         <div style="${this.navItemStyle2.navItemRight}">
           <h2 style="font-size: 30px; font-weight: 100">热门直播：</h2>
-          <ul>
+          <ul style="border-right: 1px solid #efefef; width:270px;height:240px;">
             <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
+              <span id="navText">喵熊°</span>
             </li>
              <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
-            </li>
-             <li style="${this.navItemStyle2.navLi}">
+              <span id="navText">喵熊°</span>
+            </li> <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
-            </li>
-             <li style="${this.navItemStyle2.navLi}">
+              <span id="navText">喵熊°</span>
+            </li> <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
-            </li>
-             <li style="${this.navItemStyle2.navLi}">
+              <span id="navText">喵熊°</span>
+            </li> <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
-            </li>
-
-             <li style="${this.navItemStyle2.navLi}">
+              <span id="navText">喵熊°</span>
+            </li> <li style="${this.navItemStyle2.navLi}">
+            <div style="${this.navItemStyle2.navLeftDiv}" id="navLeftDiv"></div>
               <img v-lazy src="http://localhost:521/nav/nav1.webp" style="${this.navItemStyle2.img}"/>
-              <span>喵熊°</span>
+              <span id="navText">喵熊°</span>
             </li>
-
+    
           </ul>
         </div>
         <div class="navItem-left">
           <h2 style="font-size: 30px; font-weight: 100">热门活动：</h2>
-          <img v-lazy src="http://localhost:521/nav/nav2.webp" />
+          <img v-lazy src="http://localhost:521/nav/nav2.webp" style="margin:10px 10px;border-radius:5px;width:250px;" />
         </div>
       </div>
         `;
-        console.log(document.querySelector(".aa").innerHTML);
-      }
-      //  this.ChangeisShowCard(true);
-
-      // }
+        let navDiv = document.querySelectorAll("#navLeftDiv")
+        for (let i = 0; i < navDiv.length; i++) {
+          navDiv[i].style.background=""
+          navDiv[i].addEventListener('mouseover',()=>{
+            navDiv[i].style.background="rgba(0,0,0,.4)"
+          })
+           navDiv[i].addEventListener('mouseout',()=>{
+            navDiv[i].style.background=""
+          })
+          
+        }
+                let navText = document.querySelectorAll("#navText")
+        for (let i = 0; i < navText.length; i++) {
+          navText[i].style.color="#000";
+          navText[i].addEventListener('mouseover',()=>{
+            navText[i].style.color="#00aeec";
+          })
+           navText[i].addEventListener('mouseout',()=>{
+            navText[i].style.color="#000";
+          })
+          
+        }
+        }
+   
     },
+     
+
+
+
+
+
     noShowCard(item, i) {
-      console.log(90);
-      // this.isNavItem=false;
+      // console.log(90);
+      // if(i==2){
+        // this.isNavItem=false;
+      // }
       // document.querySelector(".aa").innerHTML=""
 
       // }
@@ -189,8 +220,8 @@ export default {
 <style lang="scss" scoped>
 // $priceColor: #cf4444;
 .navItem {
+  
   position: absolute;
-
   top: 30px;
   left: 20px;
   display: flex;
@@ -200,6 +231,7 @@ export default {
   border: 1px solid red;
   height: 300px;
   margin: 40px;
+
   .navItem-left {
     img {
       border-radius: 10px;
