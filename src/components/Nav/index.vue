@@ -42,7 +42,17 @@
 
     <!-- <h1>This is an Children page</h1> -->
     <ShowCardVue v-show="isNavItem">
-      <div class="nav"></div>
+      <div class="nav">
+
+        <div class="mh">
+          <div class="mh-left">
+            <a href="https://manga.bilibili.com/detail/mc25717?refer_from=bili_main_nav" target="_blank" v-for="mh in mhList" :key="mh.name">
+              <img :src="mh.imgUrl" alt="">
+              <span>{{mh.name}}</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </ShowCardVue>
   </div>
 </template>
@@ -97,6 +107,9 @@ export default {
       navList2: [],
       isNavItem: false,
       navItem: [],
+      mhList:[],
+      // 放漫画右边的数据
+      mhList2:[],
     };
   },
   props: {
@@ -117,7 +130,8 @@ export default {
   },
   methods: {
     ...mapMutations("tab", ["ChangeisShowCard"]),
-    showCard(item, i){  
+    showCard(item, i){
+      console.log(i,"df");  
     if (i == 2) {
         console.log(i);
         // 悬浮是navItem出现
@@ -188,6 +202,12 @@ export default {
         }
         }
    
+    
+    if(i==5){
+      // console.log("sc");
+      this.isNavItem=true;
+
+    }
     },
      
 
@@ -211,6 +231,9 @@ export default {
       this.navList = res1.navData;
       this.navList2 = res1.navData2;
       this.navItem = res1.navItem;
+      this.mhList=res1.navMhLeft;
+      this.mhList2=res1.navMhbg;
+
       console.log(res1);
     });
   },
@@ -218,58 +241,88 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// $priceColor: #cf4444;
-.navItem {
-  
-  position: absolute;
-  top: 30px;
-  left: 20px;
-  display: flex;
+.mh{
+  width:500px;
+  height: 246px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.9);
-  width: 570px;
-  border: 1px solid red;
-  height: 300px;
-  margin: 40px;
+    position: absolute;
+  top: 60px;
 
-  .navItem-left {
-    img {
-      border-radius: 10px;
-      margin: 10px 20px;
-      width: 240px;
-    }
-  }
-  .navItem-right {
-    width: 50%;
-
-    border-right: 1px solid #ccc;
-
-    li {
-      float: left;
-      margin-top: 10px;
-      margin-left: 5px;
-      width: 80px;
-      text-align: center;
-      color: #000;
-      height: 100px;
-      flex-wrap: wrap;
-      flex-direction: column;
-
+  left: 120px;
+  display: flex;
+   border: 1px solid red;
+   .mh-left{
+    width:60%;
+    margin: 13px;
+    height: 230px;
+    display: flex;
+    flex-wrap: wrap;;
+    a{
+      width:50%;
       display: flex;
+      border-radius: 10px;
+      flex-direction: column;
+       img{
+      width:100%;
+      height:50%;
     }
-
-    img {
-      width: 70px;
-      min-width: 40px;
-      border-radius: 50%;
-
-      height: 70px;
     }
-    li:hover {
-      color: #00aeec;
-    }
-  }
+   
+   }
 }
+// $priceColor: #cf4444;
+// .navItem {
+  
+//   position: absolute;
+//   top: 30px;
+//   left: 20px;
+//   display: flex;
+//   border-radius: 10px;
+//   background: rgba(255, 255, 255, 0.9);
+//   width: 570px;
+//   border: 1px solid red;
+//   height: 300px;
+//   margin: 40px;
+
+//   .navItem-left {
+//     img {
+//       border-radius: 10px;
+//       margin: 10px 20px;
+//       width: 240px;
+//     }
+//   }
+//   .navItem-right {
+//     width: 50%;
+
+//     border-right: 1px solid #ccc;
+
+//     li {
+//       float: left;
+//       margin-top: 10px;
+//       margin-left: 5px;
+//       width: 80px;
+//       text-align: center;
+//       color: #000;
+//       height: 100px;
+//       flex-wrap: wrap;
+//       flex-direction: column;
+
+//       display: flex;
+//     }
+
+//     img {
+//       width: 70px;
+//       min-width: 40px;
+//       border-radius: 50%;
+
+//       height: 70px;
+//     }
+//     li:hover {
+//       color: #00aeec;
+//     }
+//   }
+// }
 
 .nav-container {
   $warnColor: #fff;

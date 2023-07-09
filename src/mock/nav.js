@@ -146,6 +146,24 @@ export default {
 
       ],
       // navmnData
+      navMhLeft:[
+        {
+          name:"一拳超人",
+          imgUrl:"http://localhost:521/nav/mh.jpg"
+        },
+        {
+          name:"鬼灭之刃",
+          imgUrl:"http://localhost:521/nav/mh2.jpg"
+        },
+        {
+          name:"石之海（乔乔的奇妙冒险第6部）",
+          imgUrl:"http://localhost:521/nav/mh3.jpg"
+        },
+        {
+          name:"刀剑神域 Alicization篇",
+          imgUrl:"http://localhost:521/nav/mh4.jpg"
+        },
+      ],
       navMhbg:[
         {
           idx:1,
