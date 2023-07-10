@@ -17,12 +17,25 @@ Vue.use(ElementUI);
 Vue.directive('lazy', (el, binding) => {
   console.log(el,binding);
   let oldSrc = el.src //保存旧的src，方便后期渲染时候赋值src真实路径
-  console.log(oldSrc);
+  // console.log(oldSrc);
   el.src = "" //将渲染的src赋为空，则不会渲染图片出来
+  if(oldSrc=="http://localhost:5173/"){
+    
+    el.src="http://localhost:5173/src/assets/img/search.png"
+    console.log(el.src);
+  }
   let observer = new IntersectionObserver(([{ isIntersecting }]) => { // 调用方法得到该elDOM元素是否处于可视区域
-    console.log(isIntersecting);
+    // console.log(isIntersecting);
+
     if (isIntersecting) { //回调是否处于可视区域，true or false
+   
       el.src = oldSrc //如果处于可视区域额，将最开始保存的真实路径赋予DOM元素渲染
+      console.log(el.src,"fdgdfg");
+      
+      // if(el.src="http://localhost:5173/"){
+      //   el.src="http://localhost:5173/src/assets/img/search.png"
+
+      // }
       observer.unobserve(el) // 只需要监听一次即可，第二次滑动到可视区域时候不在监听
     }
   })
